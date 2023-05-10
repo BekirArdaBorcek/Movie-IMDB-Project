@@ -30,7 +30,7 @@
   .logo {
     cursor: pointer;
     img {
-      height: 50px;
+      height: 40px;
     }
   }
   .menuItems {
@@ -46,7 +46,8 @@
       align-items: center;
       margin: 0 15px;
       color: white;
-      font-weight: 500;
+      font-weight: 600;
+      font-size: 15px;
       position: relative;
       &.searchIcon {
         margin-right: 0;

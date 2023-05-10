@@ -31,7 +31,14 @@ body {
 }
 
 ::-webkit-scrollbar {
-  display: none;
+  background-color: #141414;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: whitesmoke;
+  border-radius: 10px;
+  border: 5px solid transparent;
+  background-clip: content-box;
 }
 
 .skeleton {
