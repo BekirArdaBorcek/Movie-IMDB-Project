@@ -14,60 +14,61 @@ import Explore from "./pages/explore/Explore";
 import PageNotFound from "./pages/404/PageNotFound";
 
 function App() {
-    const dispatch = useDispatch();
-    const { url } = useSelector((state) => state.home);
-    console.log(url);
+  const dispatch = useDispatch();
 
-    useEffect(() => {
-        fetchApiConfig();
-        genresCall();
-    }, []);
+  const { url } = useSelector(state => state.home);
+  console.log(url);
 
-    const fetchApiConfig = () => {
-        fetchDataFromApi("/configuration").then((res) => {
-            console.log(res);
+  useEffect(() => {
+    fetchApiConfig();
+    genresCall();
+  }, []);
 
-            const url = {
-                backdrop: res.images.secure_base_url + "original",
-                poster: res.images.secure_base_url + "original",
-                profile: res.images.secure_base_url + "original",
-            };
+  const fetchApiConfig = () => {
+    fetchDataFromApi("/configuration").then(res => {
+      console.log(res);
 
-            dispatch(getApiConfiguration(url));
-        });
-    };
+      const url = {
+        backdrop: res.images.secure_base_url + "original",
+        poster: res.images.secure_base_url + "original",
+        profile: res.images.secure_base_url + "original",
+      };
 
-    const genresCall = async () => {
-        let promises = [];
-        let endPoints = ["tv", "movie"];
-        let allGenres = {};
+      dispatch(getApiConfiguration(url));
+    });
+  };
 
-        endPoints.forEach((url) => {
-            promises.push(fetchDataFromApi(`/genre/${url}/list`));
-        });
+  const genresCall = async () => {
+    let promises = [];
+    let endPoints = ["tv", "movie"];
+    let allGenres = {};
 
-        const data = await Promise.all(promises);
-        console.log(data);
-        data.map(({ genres }) => {
-            return genres.map((item) => (allGenres[item.id] = item));
-        });
+    endPoints.forEach(url => {
+      promises.push(fetchDataFromApi(`/genre/${url}/list`));
+    });
 
-        dispatch(getGenres(allGenres));
-    };
+    const data = await Promise.all(promises);
+    console.log(data);
+    data.map(({ genres }) => {
+      return genres.map(item => (allGenres[item.id] = item));
+    });
 
-    return (
-        <BrowserRouter>
-            <Header />
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/:mediaType/:id" element={<Details />} />
-                <Route path="/search/:query" element={<SearchResult />} />
-                <Route path="/explore/:mediaType" element={<Explore />} />
-                <Route path="*" element={<PageNotFound />} />
-            </Routes>
-            <Footer />
-        </BrowserRouter>
-    );
+    dispatch(getGenres(allGenres));
+  };
+
+  return (
+    <BrowserRouter>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/:mediaType/:id" element={<Details />} />
+        <Route path="/search/:query" element={<SearchResult />} />
+        <Route path="/explore/:mediaType" element={<Explore />} />
+        <Route path="*" element={<PageNotFound />} />
+      </Routes>
+      <Footer />
+    </BrowserRouter>
+  );
 }
 
 export default App;

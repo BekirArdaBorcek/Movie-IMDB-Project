@@ -2,9 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import "./index.scss";
-
-import * as serviceWorker from "./service-worker.js";
-
 import { store } from "./store/store";
 import { Provider } from "react-redux";
 
@@ -13,5 +10,3 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <App />
   </Provider>
 );
-
-serviceWorker.register();
